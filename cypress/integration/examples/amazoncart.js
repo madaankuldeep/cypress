@@ -34,7 +34,8 @@ describe('Amazon', function () {
     cy.get(elements.SearchDropdown2).click();
 
     // Extract the product name and store it in a variable
-    cy.get(elements["3Product"])
+    cy.get(elements.SRPProductName)
+      .eq(2)
       .invoke('text')
       .then((productName) => {
         productN = productName.trim();
@@ -44,7 +45,8 @@ describe('Amazon', function () {
       });
 
     // Extract the product price and store it in a variable
-    cy.get(elements["3ProductPrice"])
+    cy.get(elements.SRPProductPrice)
+      .eq(2)
       .invoke('text')
       .then((productPrice) => {
         productP = productPrice.trim();
@@ -55,11 +57,11 @@ describe('Amazon', function () {
       });
 
     cy.wait(1000);
-    cy.get('#a-autoid-23-announce').click();
-    cy.get('.a-spacing-base > .a-button > .a-button-inner > .a-button-text').click();
+    cy.get(elements.AddToCartBtn).eq(2).click()
+    cy.get(elements.GoToCartBtn).click();
 
-    // Compare product name in PLP and Cart
-    cy.get('.a-color-base > .a-truncate > .a-truncate-cut')
+    // Compare product name in SRP and Cart
+    cy.get(elements.CartProductName)
       .invoke('text')
       .then((productName1) => {
         // Print the extracted product name in cart
@@ -67,8 +69,8 @@ describe('Amazon', function () {
         expect(productName1.trim()).to.equal(productN); // Compare with PLP product name
       });
 
-    // Compare product price in PLP and Cart
-    cy.get('.a-section > .a-size-medium')
+    // Compare product price in SRP and Cart
+    cy.get(elements.CartProductPrice)
       .invoke('text')
       .then((productPrice1) => {
         // Print the extracted product price in cart
